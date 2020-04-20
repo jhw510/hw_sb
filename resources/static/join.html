@@ -60,9 +60,7 @@ footer {
   color: white;
 }
 
-/* Responsive layout - makes the two columns/boxes 
-stack on top of each other instead of next to each other, 
-on small screens */
+/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
 @media (max-width: 600px) {
   nav, article {
     width: 100%;
@@ -78,24 +76,29 @@ on small screens */
 </header>
 
 <section>
-  <nav>
+ <nav>
     <ul>
-      <li><a id="a-first" href="join.html">Join</a></li>
-      <li><a id="a-second" href="#">Login</a></li>
+      <li><a id="a-first" href="#">Join</a></li>
+      <li><a id="a-second" href="index.html">Login</a></li>
       <li><a id="a-third" href="#">...</a></li>
-   
     </ul>
   </nav>
   
   <article>
    <form action="#">
+   	<label>Name </label> <br>
+   	<input id="name"  type = "text"/> <br>
    	<label>ID</label> <br>
-   	<input type="text"> <br>
+   	<input id = "userid" type="text"/> <br>
    	<label>PASSWORD</label><br>
-   	<input type="text"><br>
-   	<input id ="join-button" type = "button"value="회원가입">
-   	<input id="login-button" type="button" value="로그인">
+   	<input id = "passwd" type="text"/><br>
+   	<label>Ssn</label><br>
+   	<input id = "ssn" type="text"/><br>
+   	<label>Adress</label><br>
+   	<input id = "addr" type="text"/><br>
+   	<input id="jogin-button" type="button" value="회원가입">
    	<input id="cancel-button" type="button" value="취소">
+   	
    </form>
   </article>
 </section>
@@ -108,19 +111,38 @@ $('#a-first').click(function(){
 	
 })
 $('#a-second').click(function(){
-
-})
-$('#a-third').click(function(){
 	
 })
-$('#login-button').click(function(){
+$('#a-third').click(function(){
 
+})
+$('#jogin-button').click(function(){
+ 	let member = {name : $('#name').val(),
+ 		userid: $('#userid').val(),
+ 		passwd: $('#passwd').val(),
+ 		ssn:$('#ssn').val(),
+ 		addr:$('#addr').val()}
+ 	alert('입력된 주민번호 ' + member.ssn)
+ 	$.ajax({
+ 		url: '/join',
+ 		type :'post',
+ 		data:JSON.stringify(member),
+ 		dataType:'json',
+ 		contentType:'application/json',
+ 		success:function(returnName){
+ 			alert(returnName.name +' 님 회원가입 성공')
+ 		},
+ 		error:function(){
+ 			alert('회원가입 실패')
+ 		}
+ 		 
+ 		
+ 	})
+  
 })
 $('#cancel-button').click(function(){
 	
-})
-$('#join-button').click(function () {
-	
+
 })
 </script>
 </body>
