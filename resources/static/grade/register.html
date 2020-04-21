@@ -73,18 +73,15 @@ on small screens */
 </style>
 </head>
 <body>
-	<h2>로그인</h2>
+	<h2>학점보기</h2>
 	<header>
-		<h2>G마켓</h2>
+		<h2>점수등록</h2>
 	</header>
 
 	<section>
 		<nav>
 			<ul>
-				<li><a id="a-first" href="member/join.html">Join</a></li>
-				<li><a id="a-second" href="#">Login</a></li>
-				<li><a id="a-third" href="#">...</a></li>
-
+				
 			</ul>
 		</nav>
 
@@ -92,62 +89,52 @@ on small screens */
 			<form action="#">
 				<label>ID</label> <br>
 				 <input id = "userid" type="text"> <br> 
-				<label>PASSWORD</label><br>
-				<input id = "passwd" type="text"><br> 
-				<input id="join-button"
-					type="button" value="회원가입"> <input id="login-button"
-					type="button" value="로그인"> <input id="cancel-button"
-					type="button" value="취소">
+				<label>Korean</label><br>
+				<input id = "korean" type="text"><br> 
+				<label>English</label><br>
+				<input id = "english" type="text"><br> 
+				<label>Math</label><br>
+				<input id = "math" type="text"><br> 
+				<label>Java</label><br>
+				<input id = "java" type="text"><br> 
+				
+				<input id="register-button"
+					type="button" value="점수등록">
+					 <input id="show-button"
+					type="button" value="총점 ,평균,학점보기"> 
 			</form>
 		</article>
 	</section>
-
+		
 	<footer>
 		<p>Footer</p>
 	</footer>
 	<script type="text/javascript">
-		$('#a-first').click(function() {
-
-		})
-		$('#a-second').click(function() {
-
-		})
-		$('#a-third').click(function() {
-
-		})
-		$('#login-button').click(function() {
-			$.ajax({
-				url : '/member/login',
-				type : 'post',
-				data : JSON.stringify({
-					userid : $('#userid').val(),
-					passwd : $('#passwd').val()
-				}),
-				dataType : 'json',
-				contentType : 'application/json',
-				success : function(message) {
-					if(message === 'SUCCESS'){
-					location.href="grade/register.html"
-						
-					}else{
-						alert('다시로그인하세요')
-						location.href = "index.html"
-					}
-				},
-				error : function() {
-					alert('네트워킹 에러=로그인실패')
-				}
-
-			})
-		})
-		$('#cancel-button').click(function() {
+	$('#register-button').click(function(){
 		$.ajax({
+			url:'/grade/register',
+			type: 'post',
+			date: JSON.stringify({
+				korean:$('korea').val(),
+				engilsh:$('engilsg').val(),
+				math:$('math').val(),
+				java:$('java').val()
+			}),
+			dataType : 'json',
+			contentType:'application/json',
 			
+			success:function(){
+				alert('감사합니다')
+			},
+			error:function (){
+				alert('네트워킹 실패')
+			}
+			
+		
+		
 		})
-		})
-		$('#join-button').click(function() {
-
-		})
+	}
+		
 	</script>
 </body>
 </html>

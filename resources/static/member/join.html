@@ -61,9 +61,7 @@ footer {
 	color: white;
 }
 
-/* Responsive layout - makes the two columns/boxes 
-stack on top of each other instead of next to each other, 
-on small screens */
+/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
 @media ( max-width : 600px) {
 	nav, article {
 		width: 100%;
@@ -73,7 +71,7 @@ on small screens */
 </style>
 </head>
 <body>
-	<h2>로그인</h2>
+	<h2>회원가입</h2>
 	<header>
 		<h2>G마켓</h2>
 	</header>
@@ -81,23 +79,22 @@ on small screens */
 	<section>
 		<nav>
 			<ul>
-				<li><a id="a-first" href="member/join.html">Join</a></li>
-				<li><a id="a-second" href="#">Login</a></li>
+				<li><a id="a-first" href="#">Join</a></li>
+				<li><a id="a-second" href="../index.html">Login</a></li>
 				<li><a id="a-third" href="#">...</a></li>
-
 			</ul>
 		</nav>
 
 		<article>
 			<form action="#">
-				<label>ID</label> <br>
-				 <input id = "userid" type="text"> <br> 
-				<label>PASSWORD</label><br>
-				<input id = "passwd" type="text"><br> 
-				<input id="join-button"
-					type="button" value="회원가입"> <input id="login-button"
-					type="button" value="로그인"> <input id="cancel-button"
-					type="button" value="취소">
+				<label>Name </label> <br> <input id="name" type="text" /> <br>
+				<label>ID</label> <br> <input id="userid" type="text" /> <br>
+				<label>PASSWORD</label><br> <input id="passwd" type="text" /><br>
+				<label>Ssn</label><br> <input id="ssn" type="text" /><br>
+				<label>Adress</label><br> <input id="addr" type="text" /><br>
+				<input id="jogin-button" type="button" value="회원가입"> <input
+					id="cancel-button" type="button" value="취소">
+
 			</form>
 		</article>
 	</section>
@@ -115,37 +112,38 @@ on small screens */
 		$('#a-third').click(function() {
 
 		})
-		$('#login-button').click(function() {
+		$('#jogin-button').click(function() {
 			$.ajax({
-				url : '/member/login',
+				url : '/member/join',
 				type : 'post',
 				data : JSON.stringify({
+					name : $('#name').val(),
 					userid : $('#userid').val(),
-					passwd : $('#passwd').val()
+					passwd : $('#passwd').val(),
+					ssn : $('#ssn').val(),
+					addr : $('#addr').val()
 				}),
 				dataType : 'json',
 				contentType : 'application/json',
+				
+				
 				success : function(message) {
 					if(message === 'SUCCESS'){
-					location.href="grade/register.html"
+					location.href = "../index.html"
 						
 					}else{
-						alert('다시로그인하세요')
-						location.href = "index.html"
+						location.href = "join.html"
 					}
+					
 				},
 				error : function() {
-					alert('네트워킹 에러=로그인실패')
+					alert('네트워킹 실패 =회원가입 실패')
 				}
 
 			})
+
 		})
 		$('#cancel-button').click(function() {
-		$.ajax({
-			
-		})
-		})
-		$('#join-button').click(function() {
 
 		})
 	</script>
