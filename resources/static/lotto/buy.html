@@ -73,9 +73,9 @@ on small screens */
 </style>
 </head>
 <body>
-	<h2>학점보기</h2>
+	<h2>로또구매</h2>
 	<header>
-		<h2>점수등록</h2>
+		<h2>로또 추첨</h2>
 	</header>
 
 	<section>
@@ -89,19 +89,23 @@ on small screens */
 			<form action="#">
 				<label>ID</label> <br>
 				 <input id = "userid" type="text"> <br> 
-				<label>Korean</label><br>
-				<input id = "korean" type="text"><br> 
-				<label>English</label><br>
-				<input id = "english" type="text"><br> 
-				<label>Math</label><br>
-				<input id = "math" type="text"><br> 
-				<label>Java</label><br>
-				<input id = "java" type="text"><br> 
+				<label>로또 첫번째 번호 입력</label><br>
+				<input id = "lotto_1" type="text"><br> 
+				<label>로또 두번째 번호 입력</label><br>
+				<input id = "lotto_2" type="text"><br> 
+				<label>로또 세번째 번호 입력</label><br>
+				<input id = "lotto_3" type="text"><br> 
+				<label>로또 네번째 번호 입력</label><br>
+				<input id = "lotto_4" type="text"><br> 
+				<label>로또 다섯번째 번호 입력</label><br>
+				<input id = "lotto_5" type="text"><br> 
+				<label>로또 여섯번째 번호 입력</label><br>
+				<input id = "lotto_6" type="text"><br> 
 				
-				<input id="register-button"
-					type="button" value="점수등록">
-					 <input id="show-button"
-					type="button" value="학점보기"> 
+				<input id="buy-button"
+					type="button" value="로또구매">
+					 <input id="result-button"
+					type="button" value="당첨결과"> 
 			</form>
 				<div id= "result">
 				</div>	
@@ -112,50 +116,51 @@ on small screens */
 		<p>Footer</p>
 	</footer>
 	<script type="text/javascript">
-	$('#register-button').click(e =>{  //람다식으로 표현
-		e.preventDefault()//람다식 e가 오류를 발생하니까 그것을 방지 의미:Dafault 를 막아라
-		$('#result').html('')
+	$('#buy-button').click(e =>{
+		e.preventDefault()
+		$('#rsult').html('')
 		$.ajax({
-			url:'/grade/register',
-			type:'post',
-			data: JSON.stringify(
-			    {userid : $('#userid').val(),
-				 korean : $('#korean').val(),
-				 english: $('#english').val(),
-				 math : $('#math').val(),
-				 java :$ ('#java').val()}),
-			dataType:'json',
-			contentType:'application/json',
-			
-			success : d=>{
+			url:'/lotto/report',
+			type:'get',
+			data:JSON.stringify({
+				userid : $('#userid').val(),
+				lotto_1 :$('#lotto_1').val(),
+				lotto_2 :$('#lotto_2').val(),
+				lotto_3 :$('#lotto_3').val(),
+				lotto_4 :$('#lotto_4').val(),
+				lotto_5 :$('#lotto_5').val(),
+				lotto_6 :$('#lotto_6').val()
+			}),
+			dataType:'json'
+			contentType : 'application/json',
+		
+			success : d =>{
 				alert(d)
 			},
 			error : (req, x, err)=>(
-			alert(req.status+"\n" + req.responseText +"\n" +err )		
-			)
+					alert(req.status+"\n" + req.responseText +"\n" +err )		
+					)
 		})
-		//alert('람다성공')
-		})
-	$('#show-button').click(e =>{
+	})
+	$('#result-button').click(e =>{
 		e.preventDefault()
 		$.ajax({
-			url:'/grade/report/'+ $('#userid').val(),
-			type:'get',
+			url:'',
+			type:'',
+			data:,
 			dataType:'json',
-			contentType : 'application/json',
-			success :d =>{
+			contentType:'application/json',
+			
+			success : d =>{
+				 $('#result').html('<h3> 당첨 결과 :' + 꽝+'</h3>')
 				
-		$('#result').html('<h3>학점: '+'B'+'</h3>')
-					
-			
-			
 			},
 			error : (req, x, err)=>(
 					alert(req.status+"\n" + req.responseText +"\n" +err )		
 					) 
-		
+				
 		})
-	})	
+	})
 	</script>
 </body>
 </html>

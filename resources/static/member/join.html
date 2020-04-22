@@ -79,9 +79,9 @@ footer {
 	<section>
 		<nav>
 			<ul>
-				<li><a id="a-first" href="#">Join</a></li>
-				<li><a id="a-second" href="../index.html">Login</a></li>
-				<li><a id="a-third" href="#">...</a></li>
+				<li><a id="join_a" >Join</a></li>
+				<li><a id="login_a">Login</a></li>
+				
 			</ul>
 		</nav>
 
@@ -103,16 +103,10 @@ footer {
 		<p>Footer</p>
 	</footer>
 	<script type="text/javascript">
-		$('#a-first').click(function() {
-
-		})
-		$('#a-second').click(function() {
-
-		})
-		$('#a-third').click(function() {
-
-		})
-		$('#jogin-button').click(function() {
+		
+		
+		$('#jogin-button').click(e => {
+			e.preventDefault()
 			$.ajax({
 				url : '/member/join',
 				type : 'post',
@@ -127,8 +121,8 @@ footer {
 				contentType : 'application/json',
 				
 				
-				success : function(message) {
-					if(message === 'SUCCESS'){
+				success :d => {
+					if(d === 'SUCCESS'){
 					location.href = "../index.html"
 						
 					}else{
@@ -136,8 +130,8 @@ footer {
 					}
 					
 				},
-				error : function() {
-					alert('네트워킹 실패 =회원가입 실패')
+				error: (request,status,error)=>{
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error)
 				}
 
 			})

@@ -1,10 +1,170 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style>
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the header */
+header {
+	background-color: #666;
+	padding: 30px;
+	text-align: center;
+	font-size: 35px;
+	color: white;
+}
+
+/* Create two columns/boxes that floats next to each other */
+nav {
+	float: left;
+	width: 30%;
+	height: 300px; /* only for demonstration, should be removed */
+	background: #ccc;
+	padding: 20px;
+}
+
+/* Style the list inside the menu */
+nav ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+article {
+	float: left;
+	padding: 20px;
+	width: 70%;
+	background-color: #f1f1f1;
+	height: 300px; /* only for demonstration, should be removed */
+}
+
+/* Clear floats after the columns */
+section:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+/* Style the footer */
+footer {
+	background-color: #777;
+	padding: 10px;
+	text-align: center;
+	color: white;
+}
+
+/* Responsive layout - makes the two columns/boxes 
+stack on top of each other instead of next to each other, 
+on small screens */
+@media ( max-width : 600px) {
+	nav, article {
+		width: 100%;
+		height: auto;
+	}
+}
+</style>
 </head>
 <body>
+	<h2>학점보기</h2>
+	<header>
+		<h2>점수등록</h2>
+	</header>
 
+	<section>
+		<nav>
+			<ul>
+				
+			</ul>
+		</nav>
+
+		<article>
+			<form action="#">
+				<label>ID</label> <br>
+				 <input id = "userid" type="text"> <br> 
+				<label>Korean</label><br>
+				<input id = "korean" type="text"><br> 
+				<label>English</label><br>
+				<input id = "english" type="text"><br> 
+				<label>Math</label><br>
+				<input id = "math" type="text"><br> 
+				<label>Java</label><br>
+				<input id = "java" type="text"><br> 
+				
+				<input id="register-button"
+					type="button" value="점수등록">
+					 <input id="show-button"
+					type="button" value="학점보기"> 
+			</form>
+				<div id= "result">
+				</div>	
+		</article>
+	</section>
+		
+	<footer>
+		<p>Footer</p>
+	</footer>
+	<script type="text/javascript">
+	$('#register-button').click(e =>{  //람다식으로 표현
+		e.preventDefault()//람다식 e가 오류를 발생하니까 그것을 방지 의미:Dafault 를 막아라
+		$('#result').html('')
+		$.ajax({
+			url:'/grade/register',
+			type:'post',
+			data: JSON.stringify(
+			    {userid : $('#userid').val(),
+				 korean : $('#korean').val(),
+				 english: $('#english').val(),
+				 math : $('#math').val(),
+				 java :$ ('#java').val()}),
+			dataType:'json',
+			contentType:'application/json',
+			
+			success : d=>{
+				alert(d)
+			},
+			error : (req, x, err)=>(
+			alert(req.status+"\n" + req.responseText +"\n" +err )		
+			)
+		})
+		//alert('람다성공')
+		})
+	$('#show-button').click(e =>{
+		e.preventDefault()
+		$.ajax({
+			url:'/grade/total',
+			type:'post',
+			data:JSON.stringify({
+				 korean : $('#korean').val(),
+				 english: $('#english').val(),
+				 math : $('#math').val(),
+				 java :$ ('#java').val()}),
+			
+			dataType:'json',
+			contentType : 'application/json',
+			success :d =>{
+				if(d === 'SUCCESS'){
+				
+		$('#result').html('<h3>학점: '+'B'+'</h3>')
+					
+				}else{
+					alert('다시작성하세요')
+				
+				}
+			},
+			error : (req, x, err)=>(
+					alert(req.status+"\n" + req.responseText +"\n" +err )		
+					) 
+		
+		})
+	})	
+	</script>
 </body>
 </html>
