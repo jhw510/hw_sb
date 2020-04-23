@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style>
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the header */
+header {
+	background-color: #666;
+	padding: 30px;
+	text-align: center;
+	font-size: 35px;
+	color: white;
+}
+
+/* Create two columns/boxes that floats next to each other */
+nav {
+	float: left;
+	width: 30%;
+	height: 300px; /* only for demonstration, should be removed */
+	background: #ccc;
+	padding: 20px;
+}
+
+/* Style the list inside the menu */
+nav ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+article {
+	float: left;
+	padding: 20px;
+	width: 70%;
+	background-color: #f1f1f1;
+	height: 300px; /* only for demonstration, should be removed */
+}
+
+/* Clear floats after the columns */
+section:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+/* Style the footer */
+footer {
+	background-color: #777;
+	padding: 10px;
+	text-align: center;
+	color: white;
+}
+
+/* Responsive layout - makes the two columns/boxes 
+stack on top of each other instead of next to each other, 
+on small screens */
+@media ( max-width : 600px) {
+	nav, article {
+		width: 100%;
+		height: auto;
+	}
+}
+</style>
+</head>
+<body>
+	<h2>관리자 회원가입</h2>
+	<header>
+		<h2>G마켓 관리자 회원가입</h2>
+	</header>
+
+	<section>
+		 <nav>
+    <ul>
+      <li><a id="home_a">홈으로</a></li>
+    </ul>
+  </nav>
+  
+  <article>
+   <form action="#">
+   	<label>NAME </label> <br>
+   	<input id="name" type="text"/> <br>
+   	<label>ID</label><br>
+   	<input id="userid" type="text"/><br>
+   	<label>PASSWORD</label><br>
+   	<input id="passwd" type="text"/><br>
+   	<label>SSN</label><br>
+   	<input id="ssn" type="text"><br>
+   	<label>ADRESS</label><br>
+   	<input id="addr" type="text"><br><br>
+   	<input id="join_button" type="button" value="관리자 가입">
+   	<input id="cancel_button" type="button" value="가입 취소">
+   	
+   </form>
+  </article>
+</section>
+
+<footer>
+  <p>Footer</p>
+</footer>
+<script>
+$('#home_a')
+	.css('cursor','pointer')
+	.click(e => {
+	e.preventDefault()
+	location.href = "../index.html"
+})
+$('#join_button')
+	.click(e=> {
+	e.preventDefault()
+	$.ajax({
+		url: '/user/join',
+		type: 'post',
+		data: JSON.stringify(
+				{name:$('#name').val(),
+				userid: $('#userid').val(),
+				passwd: $('#passwd').val(),
+				ssn: $('#ssn').val(),
+				addr: $('#addr').val()}),
+		dataType: 'json',
+		contentType: 'application/json',
+		success: d =>{
+			if(d === 'SUCCESS'){
+				location.href = 'signin.html'
+			}else{
+				location.href = 'signup.html'
+			}
+				
+		},
+		error: (r, x, e)=>{
+			alert(r.status)
+		}
+		
+	})
+	
+})
+
+</script>
+</body>
+</html>

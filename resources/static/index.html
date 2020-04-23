@@ -3,158 +3,159 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style>
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-	font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Style the header */
 header {
-	background-color: #666;
-	padding: 30px;
-	text-align: center;
-	font-size: 35px;
-	color: white;
+  background-color: #17D01A;
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+  color: white;
 }
 
 /* Create two columns/boxes that floats next to each other */
 nav {
-	float: left;
-	width: 30%;
-	height: 300px; /* only for demonstration, should be removed */
-	background: #ccc;
-	padding: 20px;
+  float: left;
+  width: 30%;
+  height: 300px; /* only for demonstration, should be removed */
+  background: #ccc;
+  padding: 20px;
 }
 
 /* Style the list inside the menu */
 nav ul {
-	list-style-type: none;
-	padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 
 article {
-	float: left;
-	padding: 20px;
-	width: 70%;
-	background-color: #f1f1f1;
-	height: 300px; /* only for demonstration, should be removed */
+  float: left;
+  padding: 20px;
+  width: 70%;
+  background-color: #f1f1f1;
+  height: 300px; /* only for demonstration, should be removed */
 }
 
 /* Clear floats after the columns */
 section:after {
-	content: "";
-	display: table;
-	clear: both;
+  content: "";
+  display: table;
+  clear: both;
 }
 
 /* Style the footer */
 footer {
-	background-color: #777;
-	padding: 10px;
-	text-align: center;
-	color: white;
+  background-color: #17D01A;
+  padding: 10px;
+  text-align: center;
+  color: white;
 }
 
-/* Responsive layout - makes the two columns/boxes 
-stack on top of each other instead of next to each other, 
-on small screens */
-@media ( max-width : 600px) {
-	nav, article {
-		width: 100%;
-		height: auto;
-	}
+/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+@media (max-width: 600px) {
+  nav, article {
+    width: 100%;
+    height: auto;
+  }
 }
 </style>
 </head>
 <body>
+<body>
 	<h2>로그인</h2>
 	<header>
+		<p style="font-size:48px">
+&#128159; &#127859; &#127856; &#127867;
+</p>
 		<h2>G마켓</h2>
 	</header>
 
 	<section>
 		<nav>
-			<ul>
-				<li><a id="join_a" >Join</a></li>
-				<li><a id="login_a" >Login</a></li>
-				
+    <ul>
+      <li><a id="join_a" >사용자 등록</a></li>
+      <li><a id="login_a">사용자 접속</a></li>
+      <li><a id="signup_a" >관리자 가입</a></li>
+      <li><a id="signin_a">관리자 로그인</a></li>
+    </ul>
+  </nav>
+  
+  <article>
+   <form action="#">
+   	<label>ID </label> <br>
+   	<input id="userid" type="text"> <br>
+   	<label>PASSWORD</label><br>
+   	<input id="passwd" type="text"><br>
+   	<input id="login-button" type="button" value="로그인">
+   	<input id="cancel-button" type="button" value="취소">
+   	
+   </form>
+  </article>
+</section>
 
-			</ul>
-		</nav>
-
-		<article>
-			<form action="#">
-				<label>ID</label> <br>
-				 <input id = "userid" type="text"> <br> 
-				<label>PASSWORD</label><br>
-				<input id = "passwd" type="text"><br> 
-				<input id="join-button"
-					type="button" value="회원가입"> <input id="login-button"
-					type="button" value="로그인"> <input id="cancel-button"
-					type="button" value="취소">
-			</form>
-		</article>
-	</section>
-
-	<footer>
-		<p>Footer</p>
-	</footer>
-	<script type="text/javascript">
-	//$('#join_a').css('cursor','pointer')	//즉시실행  한번만 쓰이고 아래에 119에 쓸일예정이라 합쳐짐 
+<footer>
+  <p>Footer</p>
+</footer>
+<script type="text/javascript">
+$('#join_a')
+	.css('cursor','pointer')
+	.click(e=>{
+		e.preventDefault()
+		location.href = "member/join.html"
+})
+$('#login_a')
+	.css('cursor','pointer')
+	.click(e=>{
+		e.preventDefault()
+		location.href = "index.html"
+})
+$('#signup_a')
+	.css('cursor','pointer')
+	.click(e => {
+	e.preventDefault()
+	location.href = "user/signup.html"
+})
+$('#signin_a')
+	.css('cursor','pointer')
+	.click(e => {
+	e.preventDefault()
+	location.href = "user/signin.html"
+})
+$('#login-button').click(e =>{
+	e.preventDefault()
+	$.ajax({
+		url: '/member/login',
+		type: 'post',
+		data: JSON.stringify(
+				{userid: $('#userid').val(),
+				 passwd: $('#passwd').val()}),
+		dataType: 'json',
+		contentType: 'application/json',
+		success : d => {
+			if(d === 'SUCCESS'){
+				location.href = "lotto/buy.html"
+			}else{
+				alert('다시 로그인 해주세요')
+				location.href = "index.html"
+			}
+		},
+		error: (request,status,error)=>{
+			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error)
+		}
+	})
+})
+$('#cancel-button').click(function(){
 	
-		$('#login_a')
-		.css('cursor','pointer')
-		.click(e =>{
-			e.preventDefault()
-			location.href = "index.html"
-		})
-		$('#join_a')
-		.css('cursor','pointer')
-		.click(e =>{
-			e.preventDefault()
-			location.href = "member/join.html"
-		})
-		$('#login-button').click(e => {  //클릭하면 실행
-			e.preventDefault()
-			$.ajax({
-				url : '/member/login',
-				type : 'post',
-				data : JSON.stringify({
-					userid : $('#userid').val(),
-					passwd : $('#passwd').val()
-				}),
-				dataType : 'json',
-				contentType : 'application/json',
-				success : d => {
-					if(d === 'SUCCESS'){
-					location.href="lotto/buy.html"
-						
-					}else{
-						alert('다시로그인하세요')
-						location.href = "index.html"
-					}
-				},
-				error: (request,status,error)=>{
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error)
-				}
-
-			})
-		})
-		$('#cancel-button').click(e => {
-			e.preventDefault()
-			$.ajax({
-			
-		})
-		})
-		$('#join-button').click(e =>{
-
-		})
-	</script>
+})
+</script>
 </body>
 </html>

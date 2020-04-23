@@ -75,13 +75,17 @@ on small screens */
 <body>
 	<h2>로또구매</h2>
 	<header>
+<p style="font-size:48px">
+&#129310; &#129297; 
+</p>
 		<h2>로또 추첨</h2>
 	</header>
 
 	<section>
 		<nav>
 			<ul>
-				
+					
+				<li><a id="home_a">홈으로</a></li>
 			</ul>
 		</nav>
 
@@ -116,11 +120,19 @@ on small screens */
 		<p>Footer</p>
 	</footer>
 	<script type="text/javascript">
+	$('#home_a')
+
+		.css('cursor','pointer')
+		.click(e =>{
+			e.preventDafault()
+		location.href = "../index.html"
+		})
+	
 	$('#buy-button').click(e =>{
 		e.preventDefault()
 		$('#rsult').html('')
 		$.ajax({
-			url:'/lotto/report',
+			url:'/lotto/report/{userid}',
 			type:'get',
 			data:JSON.stringify({
 				userid : $('#userid').val(),

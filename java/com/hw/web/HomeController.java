@@ -7,10 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @SpringBootConfiguration
 @Controller
 public class HomeController {
-
-@GetMapping("/")
-public String hello() {
-return "index.html";
-}
+	@GetMapping("/")
+	public String hello() {
+		return "index.html";
+	}
 
 }

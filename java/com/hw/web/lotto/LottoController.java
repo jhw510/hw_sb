@@ -17,8 +17,9 @@ public class LottoController {
 	@Autowired LottoService lottoService;
 	
  @GetMapping ("/report/{userid}")
- public LottoResult report(@PathVariable String userid) {
-	 return lottoService.detail(userid);
+ public LottoResult report(@PathVariable String number) {
+	 System.out.println("들어오나.??");
+	 return lottoService.detail(number);
  }
  @GetMapping("/detail")
  public Lotto detail(@RequestBody String userid) {

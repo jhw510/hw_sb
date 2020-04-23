@@ -44,20 +44,20 @@ public class LottoServiceImpl implements LottoService {
 
 	@Override
 	public Lotto[] list(String userid) {
-		return null;
+		return lottos;
 	}
 
 	@Override
-	public int conut() {
+	public int count() {
 
 		return count;
 	}
 
 	@Override
-	public LottoResult detail(String userid) {
-		LottoResult returnDetail = null;
-		
-		switch (returnDetail) {
+	public LottoResult detail(String number) {
+		LottoResult returnDetail =null;
+		int returnCount =0;
+		switch (returnCount) {
 		case 7:
 			returnDetail = returnDetail.A;
 			break;
@@ -80,5 +80,16 @@ public class LottoServiceImpl implements LottoService {
 		}
 		return returnDetail;
 
+	}
+
+	@Override
+	public int countNumber(String number) {
+		int returnCount =0;
+		for (int i=0;i<count;i++) {
+			if(number.equals(lottos[i].getNumber())) {
+				returnCount++;
+			}
+		}
+		return returnCount;
 	}
 }
