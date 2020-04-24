@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService{
 	private Map<String, Object> map;
-	private int count;
+	
 	
 	public UserServiceImpl () {
 		map= new HashMap<>();
-		 count =0;
+		
 	}
 	
 	
@@ -32,8 +32,10 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public User detail(String userid) {
-		
-		return (User) map.get(userid);
+		System.out.println("서비스 detail 들어온 id: "+userid);
+		User t = (User) map.get(userid);
+		System.out.println("===============> "+t);
+		return t;
 	}
 
 	@Override
@@ -55,7 +57,10 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void update(User user) {
+	public boolean  update(User user) {
+		
+		map.replace(user.getUserid(), user);
+		return true;
 		
 	}
 
@@ -63,6 +68,13 @@ public class UserServiceImpl implements UserService{
 	public void delete(User user) {
 		
 		
+	}
+
+
+	@Override
+	public boolean remove(String userid) {
+		map.remove(userid);
+		return true;
 	}
 
 

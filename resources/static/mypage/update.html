@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>My Page</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+</head>
+<body class="bg-light">
+
+	<div class="container">
+		<div class="py-5 text-center">
+			<a  data-montelena-acode="200003381" data-montelena-floating_yn="N" data-montelena-tour_yn="N">
+			<img src="//pics.gmarket.co.kr/pc/single/kr/common/image__logo.png" width="240" height="113" class="image__logo" ></a>
+			
+			<h2>수정 페이지</h2>
+		</div>
+    
+      <div class="row">
+        
+        <div class="col-md-8 order-md-1">
+          <form class="needs-validation" novalidate="">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="name">이름</label>
+                 <div class="input-group mb-3">
+				  <input id="name" type="text" class="form-control"  aria-describedby="basic-addon1">
+				</div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="userid">아이디</label>
+                <nav aria-label="breadcrumb">
+				  <ol class="breadcrumb"><li id="userid" class="breadcrumb-item active" aria-current="page"></li></ol>
+			    </nav>
+            </div>
+            <div class="mb-3">
+              <label for="addr">주소</label>
+              <div class="input-group mb-3">
+				  <input id="addr" type="text" class="form-control"  aria-describedby="basic-addon1">
+				</div>
+            </div>
+            <div class="mb-3">
+              <label for="ssn">주민번호</label>
+             <nav aria-label="breadcrumb">
+				  <ol class="breadcrumb"><li id="ssn" class="breadcrumb-item active" aria-current="page"></li></ol>
+			    </nav>
+            </div>
+           <div class="mb-3">
+              <label for="passwd">비밀번호</label>
+              <div class="input-group mb-3">
+				  <input id="passwd" type="text" class="form-control" aria-describedby="basic-addon1">
+				</div>
+            </div>
+            <button id="confirm_button" class="btn btn-success btn-lg btn-block" type="submit">수정 확인</button>
+            <button id="concel_button" class="btn btn-warning btn-lg btn-block" type="submit">수정 취소</button>
+            <button id="remove_button" class="btn btn-danger btn-lg btn-block" type="submit">회원 탈퇴</button>
+          </form>
+        </div>
+      </div>
+
+
+      <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">© 꺄르를</p>
+        <ul class="list-inline">
+        </ul>
+      </footer>
+    </div>
+	<script>
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (function() {
+        'use strict';
+
+        window.addEventListener('load', function() {
+          // Fetch all the forms we want to apply custom Bootstrap validation styles to
+          var forms = document.getElementsByClassName('needs-validation');
+
+          // Loop over them and prevent submission
+          var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+              if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add('was-validated');
+            }, false);
+          });
+        }, false);
+      })();
+      $.getJSON('/user/detail/'+sessionStorage.getItem('userid'),d =>{
+    	  $('#name').val(d.name)
+    	  $('#userid').text(d.userid)
+    	  $('#addr').val(d.addr)
+    	  $('#ssn').text(d.ssn)
+    	  $('#passwd').val(d.passwd)
+      const name = $('#name').val()
+      const addr = $('#addr').val()
+      const passwd = $('#passwd').val()
+       alert(' 수정 전 정보 >>>>>>>> '+name +','+addr+','+passwd)
+      
+      $('#cancel_button').click(e => {
+    	  e.preventDefault()
+    	  location.href = 'mypage.html'
+      })
+      $('#confirm_button').click(e=>{
+    	  alert(' 수정 하려는 정보 >>>>>>>> '+$('#name').val()  +','+$('#addr').val() +','+$('#passwd').val())
+    	   if(name === $('#name').val() 
+    			  && addr === $('#addr').val() 
+    			  && passwd === $('#passwd').val()){
+    		  alert('변경사항이 없습니다')
+    	  }else{
+    		  $.ajax({
+    			  url : '/user/update',
+    			  type : 'put',
+    			  data : JSON.stringify({
+    				 name : $('#name').val(),
+    		    	 userid : $('#userid').text(),
+    		    	 addr : $('#addr').val(),
+    		    	 ssn : $('#ssn').text(),
+    		    	 passwd : $('#passwd').val()
+    			  }),
+    			  dataType : 'json',
+    			  contentType : 'application/json',
+    			  success : d =>{
+    				  if(d === 'SUCCESS'){
+    					  location.href = 'mypage.html'
+    				  }else{
+    					  alert('수정 실패했습니다.')
+    					  location.href = 'update.html'
+    				  }
+    			  },
+    			  error : (r, x, e)=>{
+    				  alert(r.status)
+    			  }
+    		  })
+    	  }
+    	  
+      })
+      $('#remove_button').click( e=> {
+    	  e.preventDefault()
+    	  $.ajax({
+    		  url : '/user/remove/'+sessionStorage.getItem('userid'),
+    		  type : 'delete',
+    		  dataType : 'json',
+    		  contentType : 'application/json',
+    		  success : d => {
+    			  if(d === 'SUCCESS'){
+    				  alert('탈퇴처리 되었습니다.')
+    				  sessionStorage.setItem('userid','')
+    				  location.href = '../index.html'
+    			  }
+    			  
+    		  }
+    		  
+    	  })
+      })
+      })
+    </script>
+
+
+</body>
+</html>

@@ -123,9 +123,10 @@ $('#login_button').click(e=>{
 	contentType : 'application/json',
 	success : d => {
 		if(d.messenger === 'SUCCESS'){
-			location.href = 'mypage.html'
+			sessionStorage.setItem('userid',d.user.userid)
+			location.href = "/mypage/mypage.html"
 		}else{
-			location.href = 'signin.html'
+			location.href = "signin.html"
 		}
 	},
 	error : (r, x, e) => {

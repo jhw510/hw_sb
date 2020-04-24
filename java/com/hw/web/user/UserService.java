@@ -7,6 +7,8 @@ public interface UserService {
 	public int count();
 	public User login(User user);
 	
-	public void update(User user);
+	public boolean update(User user);
+	public boolean remove(String userid);
+	
 	public void delete(User user);
 }
