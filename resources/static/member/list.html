@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원 목록</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<style>
+html, body{width: 100%; height:100%;overflow:hidden; min-height: 100%;}
+.border_black{border:1px solid black;}
+.center{margin: 0 auto;}
+.width_full{width:'100%';height:'100%';}
+</style>
+</head>
+<body>
+<div>
+     <table id="members">
+     	<tr><td id="title" colspan="2"><h1>회원 목록</h1></td></tr>
+     	<tr><td id="nav" colspan="2">회원 조회, 회원 수, 회원 정보 수정, 회원 탈퇴</td></tr>
+     	<tr><td id="sidemenu">회원 목록</td>
+     	<td id="content">
+     		<table id="member_list">
+     			<tr><td>No.</td><td>아이디</td><td>이름</td><td>SSN</td><td>주소</td></tr>
+     		</table>
+     	</td></tr>
+     	<tr><td id="footer" colspan="2">footer</td></tr>
+     </table>
+</div>
+<script>
+$('#members').css({width:'80%',height:'900px' }).addClass('border_black center')
+$('#members tr').addClass('border_black width_full')	
+$('#sidemenu').css({width:'10%'}).addClass('border_black')	
+$('#content').addClass('border_black')	
+$('#member_list').addClass('border_black').css({'width':'100%'})
+$('#member_list tr').addClass('border_black width_full')
+$.getJSON('/user/list', d=> {
+	alert('리스트 수: '+d.length)
+	let list = ''
+		for(let i=0;i< d.length;i++){
+			list += '<tr><td>'+(i+1)+'</td><td>'+d[i].userid+'</td><td>'
+			+d[i].name+'</td><td>'+d[i].ssn+'</td><td>'+d[i].addr+'</td></tr>'
+		}
+	$('#member_list').append(list)
+	$('#member_list tr td').addClass('border_black').css({width: '20%'})
+})
+
+
+</script>
+</body>
+</html>

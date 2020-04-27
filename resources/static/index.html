@@ -82,10 +82,10 @@ footer {
 	<section>
 		<nav>
     <ul>
-      <li><a id="join_a" >사용자 등록</a></li>
-      <li><a id="login_a">사용자 접속</a></li>
-      <li><a id="signup_a" >관리자 가입</a></li>
-      <li><a id="signin_a">관리자 로그인</a></li>
+      <li><a id="join_a" >관리자 등록</a></li>
+      <li><a id="login_a">관리자접속</a></li>
+      <li><a id="signup_a" >사용자 가입</a></li>
+      <li><a id="signin_a">사용자 로그인</a></li>
     </ul>
   </nav>
   
@@ -142,7 +142,8 @@ $('#login-button').click(e =>{
 		contentType: 'application/json',
 		success : d => {
 			if(d === 'SUCCESS'){
-				location.href = "lotto/buy.html"
+				location.href = "/member/list.html"
+				/*location.href = "lotto/buy.html"   나중에 할것*/
 			}else{
 				alert('다시 로그인 해주세요')
 				location.href = "index.html"
