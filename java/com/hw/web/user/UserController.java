@@ -60,5 +60,9 @@ public class UserController {
 		System.out.println("delete 정보 ::: "+userid);
 		return (userService.remove(userid)) ? Messenger.SUCCESS: Messenger.FAIL;
 	}
-
+	@GetMapping("/idscanner/{userid}")
+	public Messenger idscanner(@PathVariable String userid) {
+		System.out.println("아이디 중복 정보 ::: "+userid);
+		return (userService.idscanner(userid)) ? Messenger.SUCCESS: Messenger.FAIL;
+	}
 }

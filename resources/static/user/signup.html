@@ -90,9 +90,10 @@ on small screens */
    	<label>NAME </label> <br>
    	<input id="name" type="text"/> <br>
    	<label>ID</label><br>
-   	<input id="userid" type="text"/><br>
+   	<input id="userid" type="text"/> 
+   	 <input id ="idscanner_button" type="button" value="아이디 중복확인"/><br>
    	<label>PASSWORD</label><br>
-   	<input id="passwd" type="text"/><br>
+   	<input id="passwd" type="text"/> <br>
    	<label>SSN</label><br>
    	<input id="ssn" type="text"><br>
    	<label>ADRESS</label><br>
@@ -114,6 +115,7 @@ $('#home_a')
 	e.preventDefault()
 	location.href = "../index.html"
 })
+
 $('#join_button')
 	.click(e=> {
 	e.preventDefault()
@@ -141,9 +143,15 @@ $('#join_button')
 		}
 		
 	})
-	
-})
-
+	$('#idscanner_button')
+	.css('cursor','pointer')
+	.click(e =>{
+	e.preventDefault()
+	$.getJSON('/user/idscanner/' + $('#userid').val(),d=>{
+		alert(d === 'SUCCESS' )? '사용가능한 아이디입니다.':'중복된 아이디입니다.'
+	})
+	})
+	})
 </script>
 </body>
 </html>

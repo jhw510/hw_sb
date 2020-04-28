@@ -3,23 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <title>My Page</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
 <body class="bg-light">
 
-	<div class="container">
-		<div class="py-5 text-center">
-			<a  data-montelena-acode="200003381" data-montelena-floating_yn="N" data-montelena-tour_yn="N">
-			<img src="//pics.gmarket.co.kr/pc/single/kr/common/image__logo.png" width="240" height="113" class="image__logo" ></a>
-			
-			<h2>마이 페이지</h2>
+    <div class="container">
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h2>마이 페이지</h2>
       </div>
 
       <div class="row">
@@ -65,13 +59,13 @@
       </div>
 
       <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">© 꺄르를</p>
+        <p class="mb-1">© 2017-2018 Company Name</p>
         <ul class="list-inline">
         </ul>
       </footer>
     </div>
-	<script>
-      // Example starter JavaScript for disabling form submissions if there are invalid fields
+
+    <script>
       (function() {
         'use strict';
 
@@ -91,21 +85,19 @@
           });
         }, false);
       })();
-		$.getJSON('/user/detail/'+sessionStorage.getItem('userid'),d=>{
-		
-			$('#name').text(d.name)
-			$('#userid').text(d.userid)
-			$('#addr').text(d.addr)
-			$('#ssn').text(d.ssn)
-			$('#passwd').text(d.passwd)
-			
-		})
-		  $('#update_button').click(e=>{
+      $.getJSON('/user/detail/'+sessionStorage.getItem('userid'),d =>{
+    	  $('#name').text(d.name)
+    	  $('#userid').text(d.userid)
+    	  $('#addr').text(d.addr)
+    	  $('#ssn').text(d.ssn)
+    	  $('#passwd').text(d.passwd)
+      })
+      $('#update_button').click(e=>{
     	  e.preventDefault()
     	  location.href = 'update.html'
       })
-	</script>
-
+    </script>
+  
 
 </body>
 </html>

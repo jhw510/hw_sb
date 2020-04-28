@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.swing.JOptionPane;
-
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -21,6 +19,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService{
 	private Map<String, Object> map;
+	
 	public final static String FILE_PATH = "C:\\Users\\bit\\spring-workspace\\hw\\src\\main\\resources\\static\\user\\";
 	public UserServiceImpl() {
 		map = new HashMap<>();
@@ -131,14 +130,19 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User[] list(User user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void delete(User user) {
-		// TODO Auto-generated method stub
-		
+	public boolean idscanner(String userid) {
+		boolean ok = true;
+		List<User> list = readFile();
+		for(int i=0;i<list.size();i++) {
+			if(userid.equals(list.get(i).getUserid())) {
+				ok = false;
+				break;
+			}
+		}
+		/*User id =(User) map.get(userid);
+		if(userid .equals(id.getUserid())) {
+			ok=false;
+		}*/
+		return ok;
 	}
 }
